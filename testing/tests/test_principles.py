@@ -3,7 +3,7 @@ sys.path.append("../src")
 
 #TODO make it wit pip install
 
-from math_demo import (add, add_with_bug)
+from math_demo import (add, add_with_bug, calculate_tax_with_bug)
 
 def test_addition():
     assert add(2, 2) == 4;
@@ -41,6 +41,17 @@ def test_addition_communitative():
     assert add(-6, 7) == 1
     print("Test BUGGED COMMUNITATIVE PASSED")
 #
+def test_tax_calculation_pesticised():
+    assert calculate_tax_with_bug(1000) == 150.0
+    assert calculate_tax_with_bug(100) == 15.0
+    assert calculate_tax_with_bug(10) == 1.5
+    assert calculate_tax_with_bug(1) == 0.15
+    assert calculate_tax_with_bug(245) == 36.75
+    assert calculate_tax_with_bug(-200) == -30
+    assert calculate_tax_with_bug(0) == 0
+    print("Test TAX CALCULATION PASSED")
+    #assert calculate_tax_with_bug(24.5) == 3.67
+#
 
 if __name__ == "__main__":
     test_addition()
@@ -49,3 +60,4 @@ if __name__ == "__main__":
     #test_addition_overcomplicated() #DO NOT RUN
     test_addition_reasonable()
     test_addition_communitative()
+    test_tax_calculation_pesticised()
