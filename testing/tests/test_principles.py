@@ -17,9 +17,18 @@ def test_addition_bugged():
 #
 def test_addition_duplicated():
     assert add(2, 3) == 2+3
-
+#
+def test_addition_overcomplicated():
+    for i in range(0, 2**320):
+        for j in range(0, 2**32):
+            assert add(i, j) == sum(i, j)
+            assert add(-i, j) == sum(-i, j)
+            assert add(i, -j) == sum(i, -j)
+            assert add(-i, -j) == sum(-i, -j)
+#
 
 if __name__ == "__main__":
     test_addition()
     test_addition_bugged()
     test_addition_duplicated()
+    #test_addition_overcomplicated() #DO NOT RUN
