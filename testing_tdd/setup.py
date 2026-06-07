@@ -2,7 +2,7 @@ from setuptools import (setup, find_packages)
 
 setup(
 	name = "ndfl_myatnik",
-	version = "0.0.0",
+	version = "0.0.1",
 	package_dir = {"": "src"},
 	packages = find_packages(where="src"),
 	long_description = "Tax calculator",
