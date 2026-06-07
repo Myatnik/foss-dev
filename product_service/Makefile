@@ -1,17 +1,30 @@
-.PHONY: create-structure
+.PHONY: create-structure install-dep install test-pytest test build-app run
 
 create-structure:
-	mkdir -p src tests docs
-	touch src/.gitkeep tests/.gitkeep
-	touch docs/DOMAIN.md README.md .gitignore
-	touch setup.py requirements.txt
+	if not exist src mkdir src
+	if not exist tests mkdir tests
+	if not exist docs mkdir docs
+	type nul > src/.gitkeep
+	type nul > tests/.gitkeep
+	type nul > docs/DOMAIN.md
+	type nul > README.md
+	type nul > .gitignore
+	type nul > setup.py
+	type nul > requirements.txt
 
 install-dep:
-	pip install -r requirements.txt
+	python -m pip install -r requirements.txt
 
 install:
-	pip install -e
+	python -m pip install -e .
 
 test-pytest:
-	python3 -m pytest
+	python -m pytest
 
+test: install-dep install test-pytest
+
+build-app:
+	docker build -t product_service:dev .
+
+run:
+	docker run --rm --name product-service -p 8001:8000 product_service:dev
