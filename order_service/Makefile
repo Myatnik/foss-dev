@@ -1,25 +1,27 @@
 .PHONY: create-structure install-dep install test-pytest test run build-app run-docker
 
+SHELL := powershell.exe
+.SHELLFLAGS := -NoProfile -Command
+
 create-structure:
-	mkdir -p src tests docs
-	touch src/.gitkeep tests/.gitkeep
-	touch docs/DOMAIN.md README.md .gitignore 
-	touch setup.py requirements.txt
+	New-Item -ItemType Directory -Force -Path src, tests, docs | Out-Null
+	New-Item -ItemType File -Force -Path src\.gitkeep, tests\.gitkeep | Out-Null
+	New-Item -ItemType File -Force -Path docs\DOMAIN.md, README.md, .gitignore, setup.py, requirements.txt | Out-Null
 
 install-dep:
-	pip install -r requirements.txt
+	python -m pip install -r requirements.txt
 
 install:
-	pip install -e .
+	python -m pip install -e .
 
 test-pytest:
-	python3 -m pytest
+	python -m pytest tests/ -v
 
 test: install-dep install test-pytest
 
 run:
-	poetry install
-	poetry run uvicorn app.main:app --host 127.0.0.1 --port 8002
+	py -m poetry install
+	py -m poetry run uvicorn app.main:app --host 127.0.0.1 --port 8002
 
 build-app:
 	docker build -t product_service:dev ./
